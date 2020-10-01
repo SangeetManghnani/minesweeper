@@ -8,18 +8,36 @@ class Board {
         this.columns = cols;
         this.board = document.querySelector('#game-grid');
         this.mineCount = parseInt((this.rows * this.cols) * 0.2); 
-        
+        this.playAgainBtn = document.getElementById('play-again');
+        this.gameLevel = document.getElementById('level');
+        this.level = document.getElementById('level').value;
         // initialization
         this.initEventHandlers();
     }
 
     initEventHandlers = () => {
         this.board.addEventListener('click',this.checkGameStatus, true);
+        this.playAgainBtn.addEventListener('click', this.restart, true);
+        this.board.addEventListener('contextmenu', this.setFlag, true);
+        this.gameLevel.addEventListener('change', this.restart, true);
     }
+
+    setFlag = (e) => {
+        e.preventDefault();
+        if(e.target.classList.contains('flag')) {
+            e.target.classList.remove('flag');
+        } else {
+            e.target.classList.add('flag');
+        }
+    }
+
     checkGameStatus = (e) => {
         // check if clicked on mine
         //1. Clicked on mine - end game
         //2. Clicked on non mine - reveal.
+        if(e.target.classList.contains('flag')){
+            e.target.classList.remove('flag');
+        }
         if(e.target.classList.contains('mine')){
            this.gameHandler(false);
        } else {
@@ -37,12 +55,16 @@ class Board {
         const mines = document.querySelectorAll('.mine');
         for(let mine of mines) {
             const bombIcon = document.createElement('i');
-            bombIcon.classList.remove('icofont-bomb');
+            mine.classList.remove('unrevealed');
             if(type == 'lost') {
                 bombIcon.classList.add('icofont-bomb');
                 mine.classList.add('flash');
+                //play audio here
+                document.getElementById('gameEndAudio').play();
             } else {
                 bombIcon.classList.add('icofont-smirk');
+                mine.classList.add('flashWin');
+                document.getElementById('win').play();
             }
             mine.appendChild(bombIcon);
         } 
@@ -51,14 +73,10 @@ class Board {
     gameHandler = (isWin) => {
         // checks if restart game, flag, win
         if(!isWin) {
-            console.log('You lost :(');
             this.uncoverMines('lost');
-            
-            //uncover all mines - put sad faces
         } else {
-            console.log('You won!');
-            this.uncoverMines('won');
             //uncover all mines -- put happy faces
+            this.uncoverMines('won');
         }
         // 
     }
@@ -77,7 +95,13 @@ class Board {
                 col.dataset.col = j;
                 col.dataset.row = i;
                 // TODO: implement 10% of the mines logic here
-                if(Math.random() < 0.12) {
+                let difficulty = 0.12;
+                if(this.level === 'medium'){
+                    difficulty = 0.3;
+                } else if(this.level === 'pro'){
+                    difficulty = 0.5;
+                }
+                if(Math.random() < difficulty) {
                     col.classList.add('mine');
                 }
                 row.appendChild(col);
@@ -115,6 +139,9 @@ class Board {
             if(!currentCell.classList.contains('unrevealed') || currentCell.classList.contains('mine')) return;
 
             currentCell.classList.remove('unrevealed');
+            if(currentCell.classList.contains('flag')) {
+                currentCell.classList.remove('flag')
+            }
             if(currentCellMineCount) {
                 currentCell.innerHTML = currentCellMineCount;
                 return;
@@ -135,9 +162,11 @@ class Board {
 
     restart = () => {
         // remove click handlers
-
         this.board.innerHTML = "";
         this.board.removeEventListener('click', this.checkGameStatus, true);
+        this.playAgainBtn.removeEventListener('click', this.restart, true);
+        this.board.removeEventListener('contextmenu', this.setFlag, true);
+        this.gameLevel.removeEventListener('change', this.restart, true);
         var game = new Game();
         game.start();
     }

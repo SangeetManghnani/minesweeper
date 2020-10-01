@@ -15,25 +15,39 @@ body {
   flex-direction: column;
   justify-content: center;
   min-height: 100%;
+  .game-wrapper{
+    text-align: center;
+  }
+  .game-controls {
+    margin: 2rem;
+    display: flex;
+    justify-content: space-between;
+    select{
+      background: #17232a;
+      border-radius: 0.3rem;
+      color: white;
+      margin-right: 2rem;
+    }
+    #play-again {
+      padding: 1rem;
+      background: #304f5e;
+      color: white;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      &:hover {
+        background: #16222A;
+      }
+    }
+  }
   h4{ 
     font-family: 'Bangers', cursive;
     font-size: 3rem;
     letter-spacing: 0.2rem;
     margin: 0;
   }
-  #play-again {
-    padding: 1rem;
-    background: #304f5e;
-    color: white;
-    font-size: 1rem;
-    border-radius: 2px;
-    margin: 2rem;
-    cursor: pointer;
-    &:hover {
-      background: #16222A;
-    }
-  }
 }
+
 
 #game-grid {
   display: inline;
@@ -65,15 +79,31 @@ body {
       }
     }
     &.mine {
+      // css color debugger :)
+      background: red !important;
       i {
         font-size: 2rem;
         vertical-align: -webkit-baseline-middle;
         // color: red;
       }
       &.flash {
+        background: #ff9494;
         i{
-          animation: flash 3s;
+          animation: flash 3s forwards;
         }
+      }
+      &.flashWin{
+        background: #89b389;
+        i {
+          animation: flashWin 3s forwards;
+        }
+      }
+    }
+    &.flag{
+      background: #89b389;
+      i {
+        font-size: 2rem;
+        vertical-align: -webkit-baseline-middle;
       }
     }
   }
@@ -82,9 +112,20 @@ body {
 
 @keyframes flash {
   0%, 50%, 100% {
-    color: #ff9494;
+    color: #7d4d4d;
   }
   25%, 75% {
      color: white;
   }
 }
+
+@keyframes flashWin {
+  0%, 50%, 100% {
+    color: #395f39;
+  }
+  25%, 75% {
+     color: white;
+  }
+}
+
+// media-queries
