@@ -68,6 +68,8 @@ class Board {
             }
             mine.appendChild(bombIcon);
         } 
+        this.board.removeEventListener('click',this.checkGameStatus, true);
+        this.board.removeEventListener('contextmenu', this.setFlag, true);
     }
 
     gameHandler = (isWin) => {

@@ -27,6 +27,7 @@ body {
       border-radius: 0.3rem;
       color: white;
       margin-right: 2rem;
+      padding: 0.3rem;
     }
     #play-again {
       padding: 1rem;
@@ -80,7 +81,7 @@ body {
     }
     &.mine {
       // css color debugger :)
-      background: red !important;
+      // background: red !important;
       i {
         font-size: 2rem;
         vertical-align: -webkit-baseline-middle;
@@ -129,3 +130,19 @@ body {
 }
 
 // media-queries
+@media only screen and (max-width: 600px) {
+  body{
+    .game-controls{
+      #play-again, select{
+        font-size: 0.85rem;
+      }
+    }
+  }
+  #game-grid{
+    .col{
+      width: 35px;
+      height: 35px;
+      line-height: 2.5;
+    }
+  }
+}
