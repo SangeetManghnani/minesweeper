@@ -13,10 +13,6 @@
     "start": "webpack-dev-server --open --mode development",
     "prebuild": "rimraf build && rimraf ./stats.json",
     "build": "webpack --mode production --progress --display-error-details",
-    "check-eslint-config": "eslint --print-config .eslintrc | eslint-config-prettier-check",
-    "check-stylelint-config": "stylelint-config-prettier-check",
-    "lint-code": "eslint 'src/scripts/**/*.js'",
-    "lint-style": "stylelint 'src/stylesheets/**/*.{css,scss}'",
     "analyze": "webpack-bundle-analyzer ./stats.json"
   },
   "devDependencies": {
@@ -37,6 +33,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
     "file-loader": "^4.2.0",
+    "fs": "0.0.1-security",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^3.0.5",
@@ -74,22 +71,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn check-eslint-config && yarn lint-code && yarn check-stylelint-config && yarn lint-style"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{css,scss}": [
-      "stylelint --fix",
-      "git add"
     ]
   }
 }

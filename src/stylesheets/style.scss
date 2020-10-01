@@ -15,31 +15,76 @@ body {
   flex-direction: column;
   justify-content: center;
   min-height: 100%;
-}
-
-a {
-  position: relative;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: inline-block;
-
-  img {
-    display: inline-block;
-    vertical-align: middle;
-    width: 80px;
+  h4{ 
+    font-family: 'Bangers', cursive;
+    font-size: 3rem;
+    letter-spacing: 0.2rem;
+    margin: 0;
+  }
+  #play-again {
+    padding: 1rem;
+    background: #304f5e;
+    color: white;
+    font-size: 1rem;
+    border-radius: 2px;
+    margin: 2rem;
+    cursor: pointer;
+    &:hover {
+      background: #16222A;
+    }
   }
 }
 
 #game-grid {
-  display: flex;
-  flex-wrap: wrap;
-  background: gray;
-  div {
-    height: 40px;
-    width: 40px;
-    border: 1px solid black;
+  display: inline;
+  .row{
+      font-size: 0px;
   }
-  .mine {
-    background: orange;
+  .col {
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+    margin: 0.1rem;
+    // border-right: 1px solid #8288af;
+    // border-bottom: 1px solid #8288af;
+    vertical-align: top;
+    color: white;
+    font-size: 15px;
+    background: #16222A;
+    text-align: center;
+    line-height: 3.5;
+    cursor: pointer;
+    &.unrevealed {
+      background: #16222A;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to top right, #3A6073, #16222A);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to top right, #3A6073, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      
+      // background: #5b6290;
+      &:hover{
+        opacity: 0.6;
+      }
+    }
+    &.mine {
+      i {
+        font-size: 2rem;
+        vertical-align: -webkit-baseline-middle;
+        // color: red;
+      }
+      &.flash {
+        i{
+          animation: flash 3s;
+        }
+      }
+    }
+  }
+}
+
+
+@keyframes flash {
+  0%, 50%, 100% {
+    color: #ff9494;
+  }
+  25%, 75% {
+     color: white;
   }
 }
