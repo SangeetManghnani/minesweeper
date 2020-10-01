@@ -7,3 +7,20 @@
   font-weight: normal;
   src: url('../fonts/Roboto-Light.woff') format('woff');
 }
+
+@font-face {
+  font-display: fallback;
+  font-family: IcoFont;
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/icofont.woff') format('woff');
+
+
+  @font-face {
+    font-display: fallback;
+    font-family: IcoFont;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/icofont.woff2') format('woff2');
+  }
+  }
